@@ -1,0 +1,29 @@
+
+html,body {
+    height:100%;
+    margin:0;
+    padding:0;
+}
+
+body {
+    background: #dddddd;
+}
+
+body>div {
+    min-height:100%;
+    background: #ffffff;
+    width: 760px;
+    margin: 0 auto;
+    padding: 32px;
+    -moz-box-shadow:    3px 3px 5px 8px #bbb;
+    -webkit-box-shadow: 3px 3px 5px 8px #bbb;
+    box-shadow:         3px 3px 5px 8px #bbb;
+}
+
+.field {
+    margin-left:24px;
+}
+
+p {
+    text-align: justify;
+}
