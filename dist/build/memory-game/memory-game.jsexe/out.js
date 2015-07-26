@@ -44750,7 +44750,7 @@ var h$mainZCMainziabout32 = h$strta("href");
 var h$mainZCMainziabout34 = h$strta("_blank");
 var h$mainZCMainziabout36 = h$strta(" target=\"");
 var h$mainZCMainziabout38 = h$strta("target");
-var h$mainZCMainziabout41 = h$strta(", a JavaScript to Haskell compiler. For the rendering, I used ");
+var h$mainZCMainziabout41 = h$strta(", a Haskell to JavaScript compiler. For the rendering, I used ");
 var h$mainZCMainziabout47 = h$strta("ghcjs");
 var h$mainZCMainziabout49 = h$strta("https:\/\/github.com\/ghcjs\/ghcjs");
 var h$mainZCMainziabout52 = h$strta(". It was compiled with Luite Stegeman's ");
@@ -46731,7 +46731,7 @@ var h$mainZCMainzirenderState5 = h$strta("<div");
 var h$mainZCMainzirenderState7 = h$strta("div");
 var h$mainZCMainzirenderState9 = h$strta("content");
 var h$mainZCMainzirow2 = h$strta("row");
-var h$mainZCMainzirules4 = h$strta("After clicking on a card, you card will show its color. The goal of Memory is to consecutively click on two cards with the same color. After finding two such cards, they will vanish from the board. Otherwise their color will be hidden and you can try again. After having found all pairs of cards, you will get your score. After playing several games, you will get some statistics about your performance.");
+var h$mainZCMainzirules4 = h$strta("After clicking on a card, it will show its color. The goal of Memory is to consecutively click on two cards with the same color. After finding two such cards, they will vanish from the board. Otherwise their color will be hidden and you can try again. After having found all pairs of cards, you will get your score. After playing several games, you will get some statistics about your performance.");
 var h$mainZCMainzirules8 = h$strta("Rules");
 function h$$ae7()
 {

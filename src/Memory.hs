@@ -166,7 +166,7 @@ renderGame (AppState (AppConfig r) gst _ cs x (PairsFound pf) ts) = do
 rules :: H.Html Action
 rules = do
   H.h3 (H.toHtml "Rules")
-  H.p $ H.toHtml "After clicking on a card, you card will show its color. The goal of Memory is to consecutively click on two cards with the same color. After finding two such cards, they will vanish from the board. Otherwise their color will be hidden and you can try again. After having found all pairs of cards, you will get your score. After playing several games, you will get some statistics about your performance."
+  H.p $ H.toHtml "After clicking on a card, it will show its color. The goal of Memory is to consecutively click on two cards with the same color. After finding two such cards, they will vanish from the board. Otherwise their color will be hidden and you can try again. After having found all pairs of cards, you will get your score. After playing several games, you will get some statistics about your performance."
 
 link :: String -> String -> H.Html Action
 link url txt =
@@ -183,7 +183,7 @@ about = do
     link "https://www.haskell.org/" "Haskell"
     H.toHtml ". It was compiled with Luite Stegeman's "
     link "https://github.com/ghcjs/ghcjs" "ghcjs"
-    H.toHtml ", a JavaScript to Haskell compiler. For the rendering, I used "
+    H.toHtml ", a Haskell to JavaScript compiler. For the rendering, I used "
     link "https://github.com/meiersi/blaze-react" "blaze-react"
     H.toHtml ", the blaze-html style ReactJS bindings for Haskell written by Simon Meier."
     H.toHtml " The styling was done with bootstrap."
