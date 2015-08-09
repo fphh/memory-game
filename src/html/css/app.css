@@ -27,3 +27,13 @@ body>div {
 p {
     text-align: justify;
 }
+
+.max-game {
+    color: green;
+    font-weight:bold;
+}
+
+.min-game {
+    color: red;
+    font-weight: bold;
+}

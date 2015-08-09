@@ -5,6 +5,8 @@ module Main where
 
 import Data.Colour.SRGB
 
+import qualified Data.List as List
+
 import Blaze.React
 
 import qualified Data.Text as Text
@@ -128,11 +130,34 @@ statistics xs =
             H.div H.! A.class_ (H.toValue "col-xs-5") $ H.toHtml a
             H.div H.! A.class_ (H.toValue "col-xs-3") $ H.toHtml b
 
+toPerc :: Double -> String
+toPerc p = printf "%.2f" (100*p) ++ "%"
+
+minMax :: [Double] -> H.Html Action
+minMax ts =
+  let idxs = [1 :: Int ..]
+      xs = reverse $ zip idxs ts
+      maX = maximum ts
+      miN = minimum ts
+      maxIdx = fmap (1+) $ List.findIndex (maX==) ts 
+      minIdx = fmap (1+) $ List.findIndex (miN==) ts
+      addClass idx =
+        case (fmap (idx==) maxIdx, fmap (idx==) minIdx) of
+             (Just True, Just False) -> (H.toValue "max-game " `mappend`)
+             (Just False, Just True) -> (H.toValue "min-game " `mappend`)
+             _ -> id        
+      g (a, b) =
+          H.div H.! A.class_ (addClass a $ H.toValue "row") $ do
+            H.div H.! A.class_ (H.toValue "col-xs-5") $ H.toHtml (show a ++ ". Game")
+            H.div H.! A.class_ (H.toValue "col-xs-3") $ H.toHtml (toPerc b)
+  in H.div H.! A.class_ (H.toValue "container-fluid") $ foldMap g xs
+
 chunk :: Int -> [a] -> [[a]]
 chunk _ [] = []
 chunk n xs =
   let (as, bs) = splitAt n xs
   in as : chunk n bs
+
 
 message :: Turns -> Bool -> H.Html Action
 message (Turns ts) b =
@@ -147,26 +172,24 @@ renderGame :: AppState -> H.Html Action
 renderGame (AppState (AppConfig r) gst _ cs x (PairsFound pf) ts) = do
   let len = fromIntegral (length ts)
       mean = sum ts / len
-      stdDev = sqrt (sum (map (\t -> (t-mean)^(2::Integer)) ts) / len) :: Double
-      toPerc :: Double -> String
-      toPerc p = printf "%.2f" (100*p) ++ "%"
-      f idx t = (show idx ++ ". Game", toPerc t)
-      idxs = [1 :: Integer ..]
+      stdDev :: Double
+      stdDev = sqrt (sum (map (\t -> (t-mean)^(2::Integer)) ts) / len)
   message x (pf == r*r `div` 2) 
   field gst (chunk r cs)
   H.br
   statistics [("Number of turns", unTurns x), ("Pairs found", pf)]
   H.br
-  unless (isNaN mean) $
+  unless (isNaN mean) $ do
     statistics $
-    ("Average score", toPerc mean)
-    : ("Standard deviation", toPerc stdDev)
-    : (reverse $ zipWith f idxs ts)
+      ("Average score", toPerc mean)
+      : ("Standard deviation", toPerc stdDev)
+      : []
+    minMax ts
 
 rules :: H.Html Action
 rules = do
   H.h3 (H.toHtml "Rules")
-  H.p $ H.toHtml "After clicking on a card, it will show its color. The goal of Memory is to consecutively click on two cards with the same color. After finding two such cards, they will vanish from the board. Otherwise their color will be hidden and you can try again. After having found all pairs of cards, you will get your score. After playing several games, you will get some statistics about your performance."
+  H.p $ H.toHtml "After clicking on a card, it will show its color. The goal of this game is to consecutively click on two cards with the same color. After finding two such cards, they will vanish from the board. Otherwise their color will be hidden and you can try again. After having found all pairs of cards, you will get your score. After playing several games, you will get some statistics about your performance."
 
 link :: String -> String -> H.Html Action
 link url txt =
@@ -179,7 +202,7 @@ about :: H.Html Action
 about = do
   H.h3 (H.toHtml "About")
   H.p $ do
-    H.toHtml "This game is entirly written in "
+    H.toHtml "This page is entirly written in "
     link "https://www.haskell.org/" "Haskell"
     H.toHtml ". It was compiled with Luite Stegeman's "
     link "https://github.com/ghcjs/ghcjs" "ghcjs"
@@ -197,7 +220,7 @@ impressum = do
     H.toHtml "."
 
 title :: H.Html Action
-title = H.h1 $ H.toHtml "Memory Game"
+title = H.h1 $ H.toHtml "Find All Pairs!"
 
 renderPage :: H.Html Action -> H.Html Action
 renderPage game =
@@ -250,7 +273,7 @@ showSelectedCard x gst = Wr.lift (St.modify (mapCards (showCard x) . modifyGameS
 
 continueGame :: Card -> Card -> TransitionM AppState Action
 continueGame x y = do
-  Wr.tell [threadDelay 1000000 >> return (HideCards $ color x == color y) ] 
+  Wr.tell [print "hi" >> threadDelay 1000000 >> print "ho" >> return (HideCards $ color x == color y) ] 
 
 gameOver :: TransitionM AppState Action
 gameOver = do
